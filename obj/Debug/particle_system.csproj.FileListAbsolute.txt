@@ -1,0 +1,11 @@
+C:\Users\Othersis\Desktop\ИРНИТУ\2 курс\Технологии программирования\particle_system\particle_system\bin\Debug\particle_system.exe.config
+C:\Users\Othersis\Desktop\ИРНИТУ\2 курс\Технологии программирования\particle_system\particle_system\bin\Debug\particle_system.exe
+C:\Users\Othersis\Desktop\ИРНИТУ\2 курс\Технологии программирования\particle_system\particle_system\bin\Debug\particle_system.pdb
+C:\Users\Othersis\Desktop\ИРНИТУ\2 курс\Технологии программирования\particle_system\particle_system\obj\Debug\particle_system.csproj.AssemblyReference.cache
+C:\Users\Othersis\Desktop\ИРНИТУ\2 курс\Технологии программирования\particle_system\particle_system\obj\Debug\particle_system.Form1.resources
+C:\Users\Othersis\Desktop\ИРНИТУ\2 курс\Технологии программирования\particle_system\particle_system\obj\Debug\particle_system.Properties.Resources.resources
+C:\Users\Othersis\Desktop\ИРНИТУ\2 курс\Технологии программирования\particle_system\particle_system\obj\Debug\particle_system.csproj.GenerateResource.cache
+C:\Users\Othersis\Desktop\ИРНИТУ\2 курс\Технологии программирования\particle_system\particle_system\obj\Debug\particle_system.csproj.CoreCompileInputs.cache
+C:\Users\Othersis\Desktop\ИРНИТУ\2 курс\Технологии программирования\particle_system\particle_system\obj\Debug\particle_system.exe
+C:\Users\Othersis\Desktop\ИРНИТУ\2 курс\Технологии программирования\particle_system\particle_system\obj\Debug\particle_system.pdb
+C:\Users\Othersis\Desktop\ИРНИТУ\2 курс\Технологии программирования\particle_system\particle_system\obj\Debug\particle_system.exe.config
