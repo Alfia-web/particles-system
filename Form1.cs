@@ -15,10 +15,12 @@ namespace particle_system
     {
         List<Emitter> emitters = new List<Emitter>();
 
-        Emitter emitter;
+        Emitter.TopEmitter emitter;
 
         GravityPoint point1;
         GravityPoint point2;
+
+        Platform platform = new Platform();
         public Form1()
         {
             InitializeComponent();
@@ -26,18 +28,23 @@ namespace particle_system
             //привязка изображения
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
 
-            this.emitter = new Emitter // создаю эмиттер и привязываю его к полю emitter
+            this.emitter = new TopEmitter // создаю эмиттер и привязываю его к полю emitter
             {
-                Direction = 0,
-                Spreading = 10,
-                SpeedMin = 10,
-                SpeedMax = 10,
+                //Direction = 0,
+                Width = picDisplay.Width,
+                //Spreading = 10,
+                SpeedMin = 2,
+                SpeedMax = 6,
                 ColorFrom = Color.Gold,
-                ColorTo = Color.FromArgb(0, Color.Red),
-                ParticlePerTick = 10,
-                X = picDisplay.Width / 2,
-                Y = picDisplay.Height / 2,
+                ColorTo = Color.FromArgb(0, Color.Black),
+                //ParticlePerTick = 10,
+                //X = picDisplay.Width / 2,
+                //Y = picDisplay.Height / 2,
             };
+
+            platform.Y = picDisplay.Height - 40;
+            platform.X = picDisplay.Width / 2;
+           
 
             emitters.Add(this.emitter);
 
@@ -89,8 +96,9 @@ namespace particle_system
                 emitter.MousePositionY = e.Y;
             }
 
-            point2.x = e.X;
-            point2.y = e.Y;
+            //point2.x = e.X;
+            //point2.y = e.Y;
+            platform.X = e.X;
         }
 
         private void tbDirection_Scroll(object sender, EventArgs e)
