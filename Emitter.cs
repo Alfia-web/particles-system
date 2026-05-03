@@ -78,9 +78,14 @@ namespace particle_system
                 
             }
 
-            while (particles.Count < ParticlesCount && particlesToCreate >= 1)
+            //while (particles.Count < ParticlesCount && particlesToCreate >= 1)
+            while(particlesToCreate >= 1)
             {
                 particlesToCreate -= 1;
+                if(particles.Count >= ParticlesCount)
+                {
+                    break;
+                }
                 var particle = CreatParticle();
                 ResetParticle(particle);
                 particles.Add(particle);
@@ -130,7 +135,7 @@ namespace particle_system
                 particle.x = Particle.random.Next(Width);
                 particle.y = 0;
 
-                particle.SpeedY = 10;
+                particle.SpeedY = 6 + Particle.random.Next(0,5);
                 particle.SpeedX = Particle.random.Next(-2, 2);
             }
         }

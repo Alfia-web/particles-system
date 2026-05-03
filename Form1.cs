@@ -26,6 +26,9 @@ namespace particle_system
         Platform platform = new Platform();
 
         Image background;
+        int points;
+        int spawnCounter = 0;
+        int spawnInterval = 75;
         public Form1()
         {
             InitializeComponent();
@@ -82,7 +85,19 @@ namespace particle_system
         {
             //emitter.MousePositionX = MousePositionX;
             //emitter.MousePositionY = MousePositionY;
-            emitter.UpdateState();
+
+            spawnCounter++;
+            if (spawnCounter >= spawnInterval)
+            {
+                spawnCounter = 0;
+                emitter.UpdateState();
+            }
+            else
+            {
+                emitter.ParticlePerTick = 0;
+                emitter.UpdateState();
+                emitter.ParticlePerTick = 1;
+            }
             try
             {
                 using (var g = Graphics.FromImage(picDisplay.Image))
@@ -102,8 +117,14 @@ namespace particle_system
 
             foreach (var particle in emitter.particles.ToList())
             {
-                if (platform.IsCollide(particle)){
+                bool outOfSpace = particle.y > picDisplay.Height;
+
+                if (platform.IsCollide(particle) || outOfSpace){
+                    
+                    points++;
+                    txbScore.Text = points.ToString();
                     emitter.particles.Remove(particle);
+                  
                 }
             }
 
@@ -130,6 +151,8 @@ namespace particle_system
             emitter.Direction = tbDirection.Value;
             lbDirection.Text = $"{tbDirection.Value}°";
         }
+
+
 
         //private void tbGravition_Scroll(object sender, EventArgs e)
         //{

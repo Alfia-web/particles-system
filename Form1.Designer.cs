@@ -35,6 +35,8 @@
             this.lbDirection = new System.Windows.Forms.Label();
             this.tbGravition = new System.Windows.Forms.TrackBar();
             this.tbGravition2 = new System.Windows.Forms.TrackBar();
+            this.score = new System.Windows.Forms.Label();
+            this.txbScore = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.picDisplay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbDirection)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbGravition)).BeginInit();
@@ -62,7 +64,7 @@
             // 
             this.tbDirection.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.tbDirection.Cursor = System.Windows.Forms.Cursors.AppStarting;
-            this.tbDirection.Location = new System.Drawing.Point(670, 12);
+            this.tbDirection.Location = new System.Drawing.Point(670, 141);
             this.tbDirection.Maximum = 400;
             this.tbDirection.Name = "tbDirection";
             this.tbDirection.Size = new System.Drawing.Size(104, 56);
@@ -73,7 +75,7 @@
             // lbDirection
             // 
             this.lbDirection.AutoSize = true;
-            this.lbDirection.Location = new System.Drawing.Point(780, 12);
+            this.lbDirection.Location = new System.Drawing.Point(780, 141);
             this.lbDirection.Name = "lbDirection";
             this.lbDirection.Size = new System.Drawing.Size(44, 16);
             this.lbDirection.TabIndex = 2;
@@ -81,27 +83,46 @@
             // 
             // tbGravition
             // 
-            this.tbGravition.Location = new System.Drawing.Point(670, 83);
+            this.tbGravition.Location = new System.Drawing.Point(670, 203);
             this.tbGravition.Maximum = 100;
             this.tbGravition.Name = "tbGravition";
             this.tbGravition.Size = new System.Drawing.Size(130, 56);
             this.tbGravition.TabIndex = 3;
-           // this.tbGravition.Scroll += new System.EventHandler(this.tbGravition_Scroll);
             // 
             // tbGravition2
             // 
-            this.tbGravition2.Location = new System.Drawing.Point(684, 145);
+            this.tbGravition2.Location = new System.Drawing.Point(670, 265);
             this.tbGravition2.Maximum = 575;
             this.tbGravition2.Name = "tbGravition2";
             this.tbGravition2.Size = new System.Drawing.Size(116, 56);
             this.tbGravition2.TabIndex = 4;
-           // this.tbGravition2.Scroll += new System.EventHandler(this.tbGravition2_Scroll);
+            // 
+            // score
+            // 
+            this.score.AutoSize = true;
+            this.score.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.score.ForeColor = System.Drawing.Color.Navy;
+            this.score.Location = new System.Drawing.Point(670, 18);
+            this.score.Name = "score";
+            this.score.Size = new System.Drawing.Size(133, 16);
+            this.score.TabIndex = 7;
+            this.score.Text = "Твой счёт, капитан";
+            // 
+            // txbScore
+            // 
+            this.txbScore.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.txbScore.Location = new System.Drawing.Point(670, 37);
+            this.txbScore.Name = "txbScore";
+            this.txbScore.Size = new System.Drawing.Size(130, 22);
+            this.txbScore.TabIndex = 8;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(826, 756);
+            this.Controls.Add(this.txbScore);
+            this.Controls.Add(this.score);
             this.Controls.Add(this.tbGravition2);
             this.Controls.Add(this.tbGravition);
             this.Controls.Add(this.lbDirection);
@@ -126,6 +147,8 @@
         private System.Windows.Forms.Label lbDirection;
         private System.Windows.Forms.TrackBar tbGravition;
         private System.Windows.Forms.TrackBar tbGravition2;
+        private System.Windows.Forms.Label score;
+        private System.Windows.Forms.TextBox txbScore;
     }
 }
 
