@@ -82,7 +82,6 @@ namespace particle_system
         {
             //emitter.MousePositionX = MousePositionX;
             //emitter.MousePositionY = MousePositionY;
-         
             emitter.UpdateState();
             try
             {
@@ -104,7 +103,7 @@ namespace particle_system
             foreach (var particle in emitter.particles.ToList())
             {
                 if (platform.IsCollide(particle)){
-                    
+                    emitter.particles.Remove(particle);
                 }
             }
 

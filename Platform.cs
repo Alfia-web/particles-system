@@ -21,8 +21,8 @@ namespace particle_system
 
         public bool IsCollide(Particle p)
         {
-            return p.x > X && p.x < X + Width &&
-                p.y > Y && p.y < Y + Height;
+            return p.x + p.Radius > X && p.x - p.Radius < X + Width &&
+                p.y + p.Radius > Y && p.y - p.Radius < Y + Height;
         }
     }
 }
