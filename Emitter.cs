@@ -38,7 +38,7 @@ namespace particle_system
         public float GravitationY = 0; //гравитация силой 1 пиксель
 
        
-        public void UpdateState()
+        public virtual void UpdateState()
         {
             int particlesToCreate = ParticlePerTick; //сколько частиц за раз
 
@@ -63,8 +63,7 @@ namespace particle_system
                         point.ImpactParticle(particle);
                     }
 
-                    particle.SpeedX += GravitationX;
-                    particle.SpeedY += GravitationY;
+
 
                     particle.x += particle.SpeedX;
                     particle.y += particle.SpeedY;
@@ -158,6 +157,40 @@ namespace particle_system
                 particle.isBadParticle = false;
             }
             return particle; 
+        }
+
+        public class ClaudeEmitter : Emitter
+        {
+            public int Width;
+
+            public override void ResetParticle(Particle particle)
+            {
+                particle.x = Particle.random.Next(Width);
+                particle.y = Particle.random.Next(50, 150);
+
+                particle.SpeedX = (float)(Particle.random.NextDouble() - 0.5) * 0.5f;
+                particle.SpeedY = (float)(Particle.random.NextDouble() - 0.5) * 0.5f;
+            }
+
+            public override Particle CreatParticle()
+            {
+                return new ParticleColorful()
+                {
+                    FromColor = Color.White,
+                    ToColor = Color.LightBlue,
+                    isBadParticle = false
+                };
+            }
+
+            public override void UpdateState()
+            {
+                base.UpdateState();
+                foreach (var particle in particles)
+                {
+                    particle.SpeedX *= 0.85f;
+                    particle.SpeedY *= 0.85f;
+                }
+            }
         }
     }
 }

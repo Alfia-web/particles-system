@@ -30,7 +30,7 @@ namespace particle_system
             SpeedX = (float)(Math.Cos(direction / 79 * Math.PI) * speed);
             SpeedY = -(float)(Math.Sin(direction / 45 * Math.PI) * speed);
 
-            Radius = 60 + random.Next(100);
+            Radius = 5 + random.Next(10);
         }
 
             public virtual void Draw(Graphics g)
@@ -73,7 +73,7 @@ namespace particle_system
             //float k = Math.Min(1f, Life / 100);
 
             // так как k уменьшается от 1 до 0, то порядок цветов обратный
-            var color = isBadParticle ? Color.Red : Color.Gold;
+            var color = FromColor;
             var b = new SolidBrush(color);
 
             g.FillEllipse(b, x - Radius, y - Radius, Radius, Radius * 2);

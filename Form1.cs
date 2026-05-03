@@ -19,9 +19,9 @@ namespace particle_system
         List<Emitter> emitters = new List<Emitter>();
 
         Emitter.TopEmitter emitter;
-
-        //GravityPoint point1;
-        //GravityPoint point2;
+        Emitter.ClaudeEmitter cloudeEmitter; 
+        GravityPoint point1;
+        GravityPoint point2;
 
         Platform platform = new Platform();
 
@@ -39,18 +39,25 @@ namespace particle_system
             background = Properties.Resources.b137314d29b249a7d78a2c1243c4063c;
 
 
-            this.emitter = new TopEmitter // создаю эмиттер и привязываю его к полю emitter
+            emitter = new TopEmitter // создаю эмиттер и привязываю его к полю emitter
             {
                 //Direction = 0,
                 Width = picDisplay.Width,
                 //Spreading = 10,
                 SpeedMin = 2,
                 SpeedMax = 6,
-                ColorFrom = Color.Gold,
-                ColorTo = Color.FromArgb(0, Color.Black),
                 ParticlePerTick = 1,
                 //X = picDisplay.Width / 2,
                 //Y = picDisplay.Height / 2,
+            };
+
+            cloudeEmitter = new ClaudeEmitter
+            {
+                Width = picDisplay.Width,
+                ParticlesCount = 1000,
+              
+                SpeedMin = 1,
+                SpeedMax = 3,
             };
 
             platform.Y = picDisplay.Height - 40;
@@ -59,20 +66,34 @@ namespace particle_system
 
             emitters.Add(this.emitter);
 
-            //point1 = new GravityPoint
-            //{
-            //    x = picDisplay.Width / 2 + 100,
-            //    y = picDisplay.Height / 2,
-            //};
-            //point2 = new GravityPoint
-            //{
-            //    x = picDisplay.Width / 2 - 100,
-            //    y = picDisplay.Height / 2,
-            //};
+
+            point1 = new GravityPoint
+            {
+                x = picDisplay.Width / 2 + 100,
+                y = 80,
+                Power = 10,
+            };
+            point2 = new GravityPoint
+            {
+                x = picDisplay.Width / 2 - 100,
+                y = 80,
+                Power = 10,
+            };
 
             // привязываем поля к эмиттеру
-            //emitter.impactPoints.Add(point1);
-            //emitter.impactPoints.Add(point2);
+            cloudeEmitter.impactPoints.Add(point1);
+            cloudeEmitter.impactPoints.Add(point2);
+
+            emitter.X = picDisplay.Width / 2;
+            emitter.Y = 0;
+            emitter.ParticlePerTick = 2;
+
+            while (cloudeEmitter.particles.Count < cloudeEmitter.ParticlesCount)
+            {
+                var p = cloudeEmitter.CreatParticle();
+                cloudeEmitter.ResetParticle(p);
+                cloudeEmitter.particles.Add(p);
+            }
         }
 
 
@@ -100,11 +121,15 @@ namespace particle_system
                 emitter.ParticlePerTick = 1;
             }
 
+            cloudeEmitter.UpdateState();
             using (var g = Graphics.FromImage(picDisplay.Image))
             {
                 g.DrawImage(background, 0, 0, picDisplay.Width, picDisplay.Height);
+                
+                cloudeEmitter.Render(g);
                 emitter.Render(g);
-                platform.Render(g);
+                platform.Render(g); 
+
             }
 
             picDisplay.Invalidate();
@@ -143,6 +168,8 @@ namespace particle_system
                 timer1.Stop();
                 MessageBox.Show("Game Over");
             }
+
+           
         }
 
         private int MousePositionX = 0;

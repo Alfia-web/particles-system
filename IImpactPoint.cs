@@ -25,47 +25,47 @@ namespace particle_system
         }
     }
 
-    //public class GravityPoint : IImpactPoint
-    //{
-    //    public int Power = 100; // сила притяжения
+    public class GravityPoint : IImpactPoint
+    {
+        public int Power = 100; // сила притяжения
 
-    //    // а сюда по сути скопировали с минимальными правками то что было в UpdateState
-    //    //public override void ImpactParticle(Particle particle)
-    //    //{
-    //    //    float gX = x - particle.x;
-    //    //    float gY = y - particle.y;
-    //    //    float r2 = (float)Math.Max(100, gX * gX + gY * gY);
+        // а сюда по сути скопировали с минимальными правками то что было в UpdateState
+        public override void ImpactParticle(Particle particle)
+        {
+            float gX = x - particle.x;
+            float gY = y - particle.y;
+            float r2 = (float)Math.Max(100, gX * gX + gY * gY);
 
-    //    //    particle.SpeedX += gX * Power / r2;
-    //    //    particle.SpeedY += gY * Power / r2;
-    //    //}
+            particle.SpeedX += gX * Power / r2;
+            particle.SpeedY += gY * Power / r2;
+        }
 
-    //    //public override void Render(Graphics g)
-    //    //{
-    //    //    g.DrawEllipse(
-    //    //      new Pen(Color.Red),
-    //    //      x - Power / 2,
-    //    //      y - Power / 2,
-    //    //      Power,
-    //    //      Power
-    //    //  );
-    //    //}
+        public override void Render(Graphics g)
+        {
+            g.DrawEllipse(
+              new Pen(Color.Red),
+              x - Power / 2,
+              y - Power / 2,
+              Power,
+              Power
+          );
+        }
 
-    //}
+    }
 
-    //public class AntiGravityPoint : IImpactPoint
-    //{
-    //    //public int Power = 100; // сила притяжения
+    public class AntiGravityPoint : IImpactPoint
+    {
+        public int Power = 100; // сила притяжения
 
-    //    //// а сюда по сути скопировали с минимальными правками то что было в UpdateState
-    //    //public override void ImpactParticle(Particle particle)
-    //    //{
-    //    //    float gX = x - particle.x;
-    //    //    float gY = y - particle.y;
-    //    //    float r2 = (float)Math.Max(100, gX * gX + gY * gY);
+        // а сюда по сути скопировали с минимальными правками то что было в UpdateState
+        public override void ImpactParticle(Particle particle)
+        {
+            float gX = x - particle.x;
+            float gY = y - particle.y;
+            float r2 = (float)Math.Max(100, gX * gX + gY * gY);
 
-    //    //    particle.SpeedX -= gX * Power / r2;
-    //    //    particle.SpeedY -= gY * Power / r2;
-    //    //}
-    //}
+            particle.SpeedX -= gX * Power / r2;
+            particle.SpeedY -= gY * Power / r2;
+        }
+    }
 }
