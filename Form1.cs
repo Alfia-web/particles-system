@@ -1,4 +1,5 @@
-﻿using System;
+﻿using particle_system.Properties;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,11 +9,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static particle_system.Emitter;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify;
 
 namespace particle_system
 {
     public partial class Form1 : Form
     {
+        
         List<Emitter> emitters = new List<Emitter>();
 
         Emitter.TopEmitter emitter;
@@ -21,12 +24,16 @@ namespace particle_system
         GravityPoint point2;
 
         Platform platform = new Platform();
+
+        Image background;
         public Form1()
         {
             InitializeComponent();
 
             //привязка изображения
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
+            background = Properties.Resources.b137314d29b249a7d78a2c1243c4063c;
+
 
             this.emitter = new TopEmitter // создаю эмиттер и привязываю его к полю emitter
             {
@@ -71,19 +78,38 @@ namespace particle_system
         }
 
         int counter = 0;
-        private void timer1_Tic(object sender, EventArgs e)
+        private void timer1_Tick(object sender, EventArgs e)
         {
-            emitter.MousePositionX = MousePositionX;
-            emitter.MousePositionY = MousePositionY;
-
+            //emitter.MousePositionX = MousePositionX;
+            //emitter.MousePositionY = MousePositionY;
+         
             emitter.UpdateState();
-            using (var g = Graphics.FromImage(picDisplay.Image))
+            try
             {
-                g.Clear(Color.White);
-                emitter.Render(g);
+                using (var g = Graphics.FromImage(picDisplay.Image))
+                {
+                    if (background != null)
+                        g.DrawImage(background, 0, 0, picDisplay.Width, picDisplay.Height);
+
+                    emitter.Render(g);
+                }
+
+                picDisplay.Invalidate();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
 
-            picDisplay.Invalidate();
+
+            foreach (var particle in emitter.particles.ToList())
+            {
+                if (platform.IsCollide(particle)){
+                    
+                }
+            }
+
+                picDisplay.Invalidate();
         }
 
         private int MousePositionX = 0;

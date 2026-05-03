@@ -28,7 +28,7 @@ namespace particle_system
 
         public int ParticlesCount = 500;
 
-        List<Particle> particles = new List<Particle>();
+        public List<Particle> particles = new List<Particle>();
         public List<IImpactPoint> impactPoints = new List<IImpactPoint>(); //точки притяженния
 
         public int MousePositionX;
@@ -37,6 +37,7 @@ namespace particle_system
         public float GravitationX = 0;
         public float GravitationY = 0; //гравитация силой 1 пиксель
 
+       
         public void UpdateState()
         {
             int particlesToCreate = ParticlePerTick; //сколько частиц за раз
@@ -74,7 +75,7 @@ namespace particle_system
 
                 //particle.x += (float)(Math.Cos(particle.Direction * Math.PI /180) * particle.Speed);
                 //particle.y += (float)(Math.Sin(particle.Direction * Math.PI / 180) * particle.Speed);
-
+                
             }
 
             while (particlesToCreate >= 1)
@@ -138,9 +139,18 @@ namespace particle_system
         public virtual Particle CreatParticle()
         {
             var particle = new ParticleColorful();
-            particle.FromColor = ColorFrom;
-            particle.ToColor = ColorTo;
 
+            if (Particle.random.Next(10) == 0)
+            {
+                particle.FromColor = Color.Black;
+                particle.ToColor = Color.Gray;
+                particle.isBadParticle = true;
+            }
+            else
+            {
+                particle.FromColor = Color.Gold;
+                particle.ToColor = Color.Transparent;
+            }
             return particle; 
         }
     }

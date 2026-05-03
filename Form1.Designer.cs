@@ -43,9 +43,10 @@
             // 
             // picDisplay
             // 
+            this.picDisplay.BackgroundImage = global::particle_system.Properties.Resources.b137314d29b249a7d78a2c1243c4063c;
             this.picDisplay.Location = new System.Drawing.Point(3, 2);
             this.picDisplay.Name = "picDisplay";
-            this.picDisplay.Size = new System.Drawing.Size(661, 646);
+            this.picDisplay.Size = new System.Drawing.Size(661, 746);
             this.picDisplay.TabIndex = 0;
             this.picDisplay.TabStop = false;
             this.picDisplay.Click += new System.EventHandler(this.pictureBox1_Click);
@@ -55,13 +56,13 @@
             // 
             this.timer1.Enabled = true;
             this.timer1.Interval = 40;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tic);
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // tbDirection
             // 
             this.tbDirection.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.tbDirection.Cursor = System.Windows.Forms.Cursors.AppStarting;
-            this.tbDirection.Location = new System.Drawing.Point(22, 484);
+            this.tbDirection.Location = new System.Drawing.Point(670, 12);
             this.tbDirection.Maximum = 400;
             this.tbDirection.Name = "tbDirection";
             this.tbDirection.Size = new System.Drawing.Size(104, 56);
@@ -72,7 +73,7 @@
             // lbDirection
             // 
             this.lbDirection.AutoSize = true;
-            this.lbDirection.Location = new System.Drawing.Point(132, 484);
+            this.lbDirection.Location = new System.Drawing.Point(780, 12);
             this.lbDirection.Name = "lbDirection";
             this.lbDirection.Size = new System.Drawing.Size(44, 16);
             this.lbDirection.TabIndex = 2;
@@ -80,7 +81,7 @@
             // 
             // tbGravition
             // 
-            this.tbGravition.Location = new System.Drawing.Point(182, 484);
+            this.tbGravition.Location = new System.Drawing.Point(670, 83);
             this.tbGravition.Maximum = 100;
             this.tbGravition.Name = "tbGravition";
             this.tbGravition.Size = new System.Drawing.Size(130, 56);
@@ -89,7 +90,7 @@
             // 
             // tbGravition2
             // 
-            this.tbGravition2.Location = new System.Drawing.Point(325, 485);
+            this.tbGravition2.Location = new System.Drawing.Point(684, 145);
             this.tbGravition2.Maximum = 575;
             this.tbGravition2.Name = "tbGravition2";
             this.tbGravition2.Size = new System.Drawing.Size(116, 56);
@@ -100,7 +101,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(668, 649);
+            this.ClientSize = new System.Drawing.Size(826, 756);
             this.Controls.Add(this.tbGravition2);
             this.Controls.Add(this.tbGravition);
             this.Controls.Add(this.lbDirection);
