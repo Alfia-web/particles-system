@@ -20,8 +20,8 @@ namespace particle_system
 
         Emitter.TopEmitter emitter;
 
-        GravityPoint point1;
-        GravityPoint point2;
+        //GravityPoint point1;
+        //GravityPoint point2;
 
         Platform platform = new Platform();
 
@@ -44,7 +44,7 @@ namespace particle_system
                 SpeedMax = 6,
                 ColorFrom = Color.Gold,
                 ColorTo = Color.FromArgb(0, Color.Black),
-                //ParticlePerTick = 10,
+                ParticlePerTick = 1,
                 //X = picDisplay.Width / 2,
                 //Y = picDisplay.Height / 2,
             };
@@ -55,20 +55,20 @@ namespace particle_system
 
             emitters.Add(this.emitter);
 
-            point1 = new GravityPoint
-            {
-                x = picDisplay.Width / 2 + 100,
-                y = picDisplay.Height / 2,
-            };
-            point2 = new GravityPoint
-            {
-                x = picDisplay.Width / 2 - 100,
-                y = picDisplay.Height / 2,
-            };
+            //point1 = new GravityPoint
+            //{
+            //    x = picDisplay.Width / 2 + 100,
+            //    y = picDisplay.Height / 2,
+            //};
+            //point2 = new GravityPoint
+            //{
+            //    x = picDisplay.Width / 2 - 100,
+            //    y = picDisplay.Height / 2,
+            //};
 
             // привязываем поля к эмиттеру
-            emitter.impactPoints.Add(point1);
-            emitter.impactPoints.Add(point2);
+            //emitter.impactPoints.Add(point1);
+            //emitter.impactPoints.Add(point2);
         }
 
 
@@ -88,10 +88,9 @@ namespace particle_system
             {
                 using (var g = Graphics.FromImage(picDisplay.Image))
                 {
-                    if (background != null)
-                        g.DrawImage(background, 0, 0, picDisplay.Width, picDisplay.Height);
-
+                    g.DrawImage(background, 0, 0, picDisplay.Width, picDisplay.Height);
                     emitter.Render(g);
+                    platform.Render(g);
                 }
 
                 picDisplay.Invalidate();
@@ -116,11 +115,11 @@ namespace particle_system
         private int MousePositionY = 0;
         private void picDisplay_MouseMove(object sender, MouseEventArgs e)
         {
-            foreach (var emitter in emitters)
-            {
-                emitter.MousePositionX = e.X;
-                emitter.MousePositionY = e.Y;
-            }
+            //foreach (var emitter in emitters)
+            //{
+            //    emitter.MousePositionX = e.X;
+            //    emitter.MousePositionY = e.Y;
+            //}
 
             //point2.x = e.X;
             //point2.y = e.Y;
@@ -133,14 +132,14 @@ namespace particle_system
             lbDirection.Text = $"{tbDirection.Value}°";
         }
 
-        private void tbGravition_Scroll(object sender, EventArgs e)
-        {
-            point1.Power = tbGravition.Value;
-        }
+        //private void tbGravition_Scroll(object sender, EventArgs e)
+        //{
+        //    point1.Power = tbGravition.Value;
+        //}
 
-        private void tbGravition2_Scroll(object sender, EventArgs e)
-        {
-            point2.Power = tbGravition2.Value;
-        }
+        //private void tbGravition2_Scroll(object sender, EventArgs e)
+        //{
+        //    point2.Power = tbGravition2.Value;
+        //}
     }
 }

@@ -86,7 +86,7 @@
             this.tbGravition.Name = "tbGravition";
             this.tbGravition.Size = new System.Drawing.Size(130, 56);
             this.tbGravition.TabIndex = 3;
-            this.tbGravition.Scroll += new System.EventHandler(this.tbGravition_Scroll);
+           // this.tbGravition.Scroll += new System.EventHandler(this.tbGravition_Scroll);
             // 
             // tbGravition2
             // 
@@ -95,7 +95,7 @@
             this.tbGravition2.Name = "tbGravition2";
             this.tbGravition2.Size = new System.Drawing.Size(116, 56);
             this.tbGravition2.TabIndex = 4;
-            this.tbGravition2.Scroll += new System.EventHandler(this.tbGravition2_Scroll);
+           // this.tbGravition2.Scroll += new System.EventHandler(this.tbGravition2_Scroll);
             // 
             // Form1
             // 

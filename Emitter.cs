@@ -18,15 +18,15 @@ namespace particle_system
         public int SpeedMax = 10; // начальная максимальная скорость движения частицы
         public int RadiusMin = 2; // минимальный радиус частицы
         public int RadiusMax = 10; // максимальный радиус частицы
-        public int LifeMin = 20; // минимальное время жизни частицы
-        public int LifeMax = 100; // максимальное время жизни частицы
+        //public int LifeMin = 20; // минимальное время жизни частицы
+        //public int LifeMax = 100; // максимальное время жизни частицы
 
         public int ParticlePerTick = 5; 
 
         public Color ColorFrom = Color.White; // начальный цвет частицы
         public Color ColorTo = Color.FromArgb(0, Color.Black); // конечный цвет частиц
 
-        public int ParticlesCount = 500;
+        public int ParticlesCount = 100;
 
         public List<Particle> particles = new List<Particle>();
         public List<IImpactPoint> impactPoints = new List<IImpactPoint>(); //точки притяженния
@@ -46,18 +46,18 @@ namespace particle_system
             { 
                 //если частица умерла
                 //проверяем нужна ли новая
-                if (particle.Life <= 0)
-                {
-                    if(particlesToCreate > 0)
-                    {
-                        particlesToCreate -= 1;
-                        ResetParticle(particle);
-                    }
-                }
-                else
-                {
+                //if (particle.Life <= 0)
+                //{
+                //    if(particlesToCreate > 0)
+                //    {
+                //        particlesToCreate -= 1;
+                //        ResetParticle(particle);
+                //    }
+                //}
+                //else
+                //{
                     //считаем вектор притяжения к точкне
-                    particle.Life -= 1;
+                    //particle.Life -= 1;
                     foreach (var point in impactPoints)
                     {
                         point.ImpactParticle(particle);
@@ -68,7 +68,7 @@ namespace particle_system
 
                     particle.x += particle.SpeedX;
                     particle.y += particle.SpeedY;
-                }
+                //}
 
                 //particle.x += (float)(Math.Cos(particle.Direction * Math.PI /180) * particle.Speed);
                 //particle.y += (float)(Math.Sin(particle.Direction * Math.PI / 180) * particle.Speed);
@@ -78,7 +78,7 @@ namespace particle_system
                 
             }
 
-            while (particlesToCreate >= 1)
+            while (particles.Count < ParticlesCount && particlesToCreate >= 1)
             {
                 particlesToCreate -= 1;
                 var particle = CreatParticle();
@@ -89,7 +89,7 @@ namespace particle_system
 
         public virtual void ResetParticle(Particle particle)
         {
-            particle.Life = Particle.random.Next(LifeMin, LifeMax);
+            //particle.Life = Particle.random.Next(LifeMin, LifeMax);
             particle.x = X;
             particle.y = Y;
 
@@ -130,7 +130,7 @@ namespace particle_system
                 particle.x = Particle.random.Next(Width);
                 particle.y = 0;
 
-                particle.SpeedY = 1;
+                particle.SpeedY = 10;
                 particle.SpeedX = Particle.random.Next(-2, 2);
             }
         }

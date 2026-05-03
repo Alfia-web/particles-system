@@ -12,11 +12,11 @@ namespace particle_system
         public float X;
         public float Y;
         public float Width = 100;
-        public float Height = 20;
+        public float Height = 15;
 
         public void Render(Graphics g)
         {
-            g.FillRectangle(Brushes.Blue, X, Y, Width, Height);
+            g.FillRectangle(Brushes.White, X, Y, Width, Height);
         }
 
         public bool IsCollide(Particle p)
