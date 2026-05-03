@@ -15,7 +15,7 @@ namespace particle_system
 {
     public partial class Form1 : Form
     {
-        
+
         List<Emitter> emitters = new List<Emitter>();
 
         Emitter.TopEmitter emitter;
@@ -29,6 +29,7 @@ namespace particle_system
         int points;
         int spawnCounter = 0;
         int spawnInterval = 75;
+
         public Form1()
         {
             InitializeComponent();
@@ -54,7 +55,7 @@ namespace particle_system
 
             platform.Y = picDisplay.Height - 40;
             platform.X = picDisplay.Width / 2;
-           
+
 
             emitters.Add(this.emitter);
 
@@ -98,37 +99,50 @@ namespace particle_system
                 emitter.UpdateState();
                 emitter.ParticlePerTick = 1;
             }
-            try
-            {
-                using (var g = Graphics.FromImage(picDisplay.Image))
-                {
-                    g.DrawImage(background, 0, 0, picDisplay.Width, picDisplay.Height);
-                    emitter.Render(g);
-                    platform.Render(g);
-                }
 
-                picDisplay.Invalidate();
-            }
-            catch (Exception ex)
+            using (var g = Graphics.FromImage(picDisplay.Image))
             {
-                MessageBox.Show(ex.Message);
+                g.DrawImage(background, 0, 0, picDisplay.Width, picDisplay.Height);
+                emitter.Render(g);
+                platform.Render(g);
             }
+
+            picDisplay.Invalidate();
+
 
 
             foreach (var particle in emitter.particles.ToList())
             {
                 bool outOfSpace = particle.y > picDisplay.Height;
 
-                if (platform.IsCollide(particle) || outOfSpace){
-                    
-                    points++;
+                if (platform.IsCollide(particle))
+                {
+
+                    if (particle.isBadParticle)
+                    {
+                        platform.Life -= 2;
+                    }
+                    else
+                    {
+                        points++;
+                    }
                     txbScore.Text = points.ToString();
                     emitter.particles.Remove(particle);
-                  
                 }
+                if (outOfSpace)
+                {
+                    platform.Life -= 10;
+                }
+
             }
 
-                picDisplay.Invalidate();
+            picDisplay.Invalidate();
+
+            if (platform.Life <= 0)
+            {
+                timer1.Stop();
+                MessageBox.Show("Game Over");
+            }
         }
 
         private int MousePositionX = 0;
@@ -152,16 +166,16 @@ namespace particle_system
             lbDirection.Text = $"{tbDirection.Value}°";
         }
 
+       
 
+    //private void tbGravition_Scroll(object sender, EventArgs e)
+    //{
+    //    point1.Power = tbGravition.Value;
+    //}
 
-        //private void tbGravition_Scroll(object sender, EventArgs e)
-        //{
-        //    point1.Power = tbGravition.Value;
-        //}
-
-        //private void tbGravition2_Scroll(object sender, EventArgs e)
-        //{
-        //    point2.Power = tbGravition2.Value;
-        //}
-    }
+    //private void tbGravition2_Scroll(object sender, EventArgs e)
+    //{
+    //    point2.Power = tbGravition2.Value;
+    //}
+}
 }

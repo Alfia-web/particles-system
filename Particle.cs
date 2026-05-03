@@ -17,7 +17,6 @@ namespace particle_system
 
         public float SpeedX;
         public float SpeedY;
-        public float Life;
 
         public static Random random = new Random();
         public bool isBadParticle;
@@ -31,25 +30,26 @@ namespace particle_system
             SpeedX = (float)(Math.Cos(direction / 79 * Math.PI) * speed);
             SpeedY = -(float)(Math.Sin(direction / 45 * Math.PI) * speed);
 
-            Radius = 5 + random.Next(30);
-            Life = 20 + random.Next(100);
+            Radius = 60 + random.Next(100);
         }
 
             public virtual void Draw(Graphics g)
             {
-            float k = Math.Min(1f, Life / 100);
+            //float k = Math.Min(1f, Life / 100);
             // рассчитываем значение альфа канала в шкале от 0 до 255
             // по аналогии с RGB, он используется для задания прозрачности
-            int alpha = (int)(k * 255);
+            //int alpha = (int)(k * 255);
 
             // создаем цвет из уже существующего, но привязываем к нему еще и значение альфа канала
-            var color = Color.FromArgb(alpha, Color.Black);
+            var color = Color.Gold;
             var b = new SolidBrush(color);
-
-            // остальное все так же
             g.FillEllipse(b, x - Radius, y - Radius, Radius * 2, Radius * 2);
-
             b.Dispose();
+
+            //// остальное все так же
+            //g.FillEllipse(b, x - Radius, y - Radius, Radius * 2, Radius * 2);
+
+            //b.Dispose();
         }
         }
 
@@ -70,10 +70,10 @@ namespace particle_system
 
        public override void Draw(Graphics g)
         {
-            float k = Math.Min(1f, Life / 100);
+            //float k = Math.Min(1f, Life / 100);
 
             // так как k уменьшается от 1 до 0, то порядок цветов обратный
-            var color = MixColor(ToColor, FromColor, k);
+            var color = isBadParticle ? Color.Red : Color.Gold;
             var b = new SolidBrush(color);
 
             g.FillEllipse(b, x - Radius, y - Radius, Radius, Radius * 2);

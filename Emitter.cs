@@ -145,16 +145,17 @@ namespace particle_system
         {
             var particle = new ParticleColorful();
 
-            if (Particle.random.Next(10) == 0)
+            if (Particle.random.Next(10) < 4)
             {
-                particle.FromColor = Color.Black;
-                particle.ToColor = Color.Gray;
+                particle.FromColor = Color.Red;
+                particle.ToColor = Color.Red;
                 particle.isBadParticle = true;
             }
             else
             {
                 particle.FromColor = Color.Gold;
-                particle.ToColor = Color.Transparent;
+                particle.ToColor = Color.Gold;
+                particle.isBadParticle = false;
             }
             return particle; 
         }
