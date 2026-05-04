@@ -32,6 +32,7 @@ namespace particle_system
         int points;
         int spawnCounter = 0;
         int spawnInterval = 75;
+        int fallingparticles = 0;
 
         public Form1()
         {
@@ -41,7 +42,7 @@ namespace particle_system
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
             background = Properties.Resources.b137314d29b249a7d78a2c1243c4063c;
 
-
+            timer1.Interval = 19;
             emitter = new TopEmitter // создаю эмиттер и привязываю его к полю emitter
             {
                 //Direction = 0,
@@ -50,8 +51,8 @@ namespace particle_system
                 SpeedMin = 2,
                 SpeedMax = 6,
                 ParticlePerTick = 1,
-                //X = picDisplay.Width / 2,
-                //Y = picDisplay.Height / 2,
+                RadiusMin = 5,
+                RadiusMax = 15,
             };
 
             cloudeEmitter = new ClaudeEmitter
@@ -98,12 +99,6 @@ namespace particle_system
             }
         }
 
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         int counter = 0;
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -139,8 +134,9 @@ namespace particle_system
                 }
             }
 
-            if (Particle.random.Next(20) == 0)
+            if (fallingparticles >= Particle.random.Next(3,10))
             {
+                fallingparticles = 0;
                 var rect = new FallingRectangle(Particle.random.Next(picDisplay.Width),
                     0, 0);
 
@@ -173,7 +169,7 @@ namespace particle_system
 
                 if (platform.IsCollide(particle))
                 {
-
+                    fallingparticles++;
                     if (particle.isBadParticle)
                     {
                         platform.Life -= 2;
@@ -181,12 +177,17 @@ namespace particle_system
                     else
                     {
                         points++;
+                        if (points % 5 ==0 && spawnCounter > 10)
+                        {
+                            spawnInterval -= 5;
+                        }
                     }
                     txbScore.Text = points.ToString();
                     emitter.particles.Remove(particle);
                 }
-                if (outOfSpace)
+                if (outOfSpace && !particle.isBadParticle)
                 {
+                    fallingparticles++;
                     platform.Life -= 10;
                 }
             }
@@ -216,8 +217,6 @@ namespace particle_system
                     rects.Remove(rect);
                 }
             }
-
-            picDisplay.Invalidate();
 
             if (platform.Life <= 0)
             {

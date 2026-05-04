@@ -19,7 +19,7 @@ namespace Event_handling.Objects
         private static Random rnd = new Random();
 
         private double timeEnd = 10;
-        public int speedRectangle = 3;
+        public int speedRectangle = 6;
         public BonusType bonus;
         public Color RectColor;
         public BonusType BonusType;

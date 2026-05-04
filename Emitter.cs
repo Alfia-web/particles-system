@@ -18,8 +18,7 @@ namespace particle_system
         public int SpeedMax = 10; // начальная максимальная скорость движения частицы
         public int RadiusMin = 2; // минимальный радиус частицы
         public int RadiusMax = 10; // максимальный радиус частицы
-        //public int LifeMin = 20; // минимальное время жизни частицы
-        //public int LifeMax = 100; // максимальное время жизни частицы
+        public int Width = 0;
 
         public int ParticlePerTick = 5; 
 
@@ -58,15 +57,18 @@ namespace particle_system
                 //{
                     //считаем вектор притяжения к точкне
                     //particle.Life -= 1;
-                    foreach (var point in impactPoints)
-                    {
-                        point.ImpactParticle(particle);
-                    }
+                foreach (var point in impactPoints)
+                {
+                    point.ImpactParticle(particle);
+                }
 
+                particle.x += particle.SpeedX;
+                particle.y += particle.SpeedY;
 
-
-                    particle.x += particle.SpeedX;
-                    particle.y += particle.SpeedY;
+                if(particle.x < 0 || particle.x > Width)
+                {
+                    particle.SpeedX *= -1;
+                }
                 //}
 
                 //particle.x += (float)(Math.Cos(particle.Direction * Math.PI /180) * particle.Speed);
