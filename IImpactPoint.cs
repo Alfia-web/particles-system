@@ -8,14 +8,11 @@ using System.Threading.Tasks;
 
 namespace particle_system
 {
-
-
     public abstract class IImpactPoint
     {
         public float x;
         public float y;
 
-        //абстрактный метод изменения частиц
         public abstract void ImpactParticle(Particle particle);
 
         public virtual void Render(Graphics g)
@@ -27,9 +24,7 @@ namespace particle_system
 
     public class GravityPoint : IImpactPoint
     {
-        public int Power = 100; // сила притяжения
-
-        // а сюда по сути скопировали с минимальными правками то что было в UpdateState
+        public int Power = 100; 
         public override void ImpactParticle(Particle particle)
         {
             if (particle.isBadParticle)
@@ -39,10 +34,12 @@ namespace particle_system
 
             float gX = x - particle.x;
             float gY = y - particle.y;
-            float r2 = (float)Math.Max(100, gX * gX + gY * gY);
+            float r2 = (float)(gX * gX + gY * gY);
 
-            particle.SpeedX += gX * Power / r2;
-            particle.SpeedY += gY * Power / r2;
+            float force = Power / (r2 + 500); 
+
+            particle.SpeedX += gX * force;
+            particle.SpeedY += gY * force;
         }
 
         public override void Render(Graphics g)
@@ -52,10 +49,8 @@ namespace particle_system
               x - Power / 2,
               y - Power / 2,
               Power,
-              Power
-          );
+              Power);
         }
-
     }
 
     public class AntiGravityPoint : IImpactPoint
@@ -69,8 +64,10 @@ namespace particle_system
             float gY = y - particle.y;
             float r2 = (float)Math.Max(100, gX * gX + gY * gY);
 
-            particle.SpeedX -= gX * Power / r2;
-            particle.SpeedY -= gY * Power / r2;
+            float force = Power / (r2 + 2000);
+
+            particle.SpeedX -= gX * force;
+            particle.SpeedY -= gY * force;
         }
     }
 }

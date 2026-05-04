@@ -31,16 +31,12 @@
             this.components = new System.ComponentModel.Container();
             this.picDisplay = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.tbDirection = new System.Windows.Forms.TrackBar();
+            this.tbSpeed = new System.Windows.Forms.TrackBar();
             this.lbDirection = new System.Windows.Forms.Label();
-            this.tbGravition = new System.Windows.Forms.TrackBar();
-            this.tbGravition2 = new System.Windows.Forms.TrackBar();
             this.score = new System.Windows.Forms.Label();
             this.txbScore = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.picDisplay)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbDirection)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbGravition)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbGravition2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbSpeed)).BeginInit();
             this.SuspendLayout();
             // 
             // picDisplay
@@ -59,42 +55,26 @@
             this.timer1.Interval = 40;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // tbDirection
+            // tbSpeed
             // 
-            this.tbDirection.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.tbDirection.Cursor = System.Windows.Forms.Cursors.AppStarting;
-            this.tbDirection.Location = new System.Drawing.Point(670, 141);
-            this.tbDirection.Maximum = 400;
-            this.tbDirection.Name = "tbDirection";
-            this.tbDirection.Size = new System.Drawing.Size(104, 56);
-            this.tbDirection.TabIndex = 1;
-            this.tbDirection.TabStop = false;
-            this.tbDirection.Scroll += new System.EventHandler(this.tbDirection_Scroll);
+            this.tbSpeed.BackColor = System.Drawing.Color.Navy;
+            this.tbSpeed.Cursor = System.Windows.Forms.Cursors.AppStarting;
+            this.tbSpeed.LargeChange = 1;
+            this.tbSpeed.Location = new System.Drawing.Point(682, 141);
+            this.tbSpeed.Name = "tbSpeed";
+            this.tbSpeed.Size = new System.Drawing.Size(95, 56);
+            this.tbSpeed.TabIndex = 1;
+            this.tbSpeed.TabStop = false;
+            this.tbSpeed.Scroll += new System.EventHandler(this.tbSpeed_Scroll);
             // 
             // lbDirection
             // 
             this.lbDirection.AutoSize = true;
-            this.lbDirection.Location = new System.Drawing.Point(780, 141);
+            this.lbDirection.Location = new System.Drawing.Point(667, 106);
             this.lbDirection.Name = "lbDirection";
-            this.lbDirection.Size = new System.Drawing.Size(44, 16);
+            this.lbDirection.Size = new System.Drawing.Size(129, 32);
             this.lbDirection.TabIndex = 2;
-            this.lbDirection.Text = "label1";
-            // 
-            // tbGravition
-            // 
-            this.tbGravition.Location = new System.Drawing.Point(670, 203);
-            this.tbGravition.Maximum = 100;
-            this.tbGravition.Name = "tbGravition";
-            this.tbGravition.Size = new System.Drawing.Size(130, 56);
-            this.tbGravition.TabIndex = 3;
-            // 
-            // tbGravition2
-            // 
-            this.tbGravition2.Location = new System.Drawing.Point(670, 265);
-            this.tbGravition2.Maximum = 575;
-            this.tbGravition2.Name = "tbGravition2";
-            this.tbGravition2.Size = new System.Drawing.Size(116, 56);
-            this.tbGravition2.TabIndex = 4;
+            this.lbDirection.Text = "Скорость падения \r\nчастиц";
             // 
             // score
             // 
@@ -119,20 +99,16 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(826, 756);
+            this.ClientSize = new System.Drawing.Size(811, 756);
             this.Controls.Add(this.txbScore);
             this.Controls.Add(this.score);
-            this.Controls.Add(this.tbGravition2);
-            this.Controls.Add(this.tbGravition);
             this.Controls.Add(this.lbDirection);
-            this.Controls.Add(this.tbDirection);
+            this.Controls.Add(this.tbSpeed);
             this.Controls.Add(this.picDisplay);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.picDisplay)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbDirection)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbGravition)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbGravition2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbSpeed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -142,10 +118,8 @@
 
         private System.Windows.Forms.PictureBox picDisplay;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.TrackBar tbDirection;
+        private System.Windows.Forms.TrackBar tbSpeed;
         private System.Windows.Forms.Label lbDirection;
-        private System.Windows.Forms.TrackBar tbGravition;
-        private System.Windows.Forms.TrackBar tbGravition2;
         private System.Windows.Forms.Label score;
         private System.Windows.Forms.TextBox txbScore;
     }

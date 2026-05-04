@@ -16,15 +16,11 @@ namespace particle_system
 {
     public partial class Form1 : Form
     {
-
         List<Emitter> emitters = new List<Emitter>();
         List<FallingRectangle> rects = new List<FallingRectangle>();
 
-
         Emitter.TopEmitter emitter;
         Emitter.ClaudeEmitter cloudeEmitter; 
-        GravityPoint point1;
-        GravityPoint point2;
 
         Platform platform = new Platform();
 
@@ -33,24 +29,19 @@ namespace particle_system
         int spawnCounter = 0;
         int spawnInterval = 20;
         int fallingparticles = 0;
+        int spawnNumber = Particle.random.Next(4,10);
 
         public Form1()
         {
             InitializeComponent();
 
-            //привязка изображения
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
             background = Properties.Resources.b137314d29b249a7d78a2c1243c4063c;
 
-            timer1.Interval = 19;
-            emitter = new TopEmitter // создаю эмиттер и привязываю его к полю emitter
+            emitter = new TopEmitter
             {
-                //Direction = 0,
                 Width = picDisplay.Width,
-                //Spreading = 10,
-                SpeedMin = 2,
-                SpeedMax = 6,
-                ParticlePerTick = 1,
+                SpeedMax = 3,
                 RadiusMin = 5,
                 RadiusMax = 10,
             };
@@ -58,38 +49,15 @@ namespace particle_system
             cloudeEmitter = new ClaudeEmitter
             {
                 Width = picDisplay.Width,
-                ParticlesCount = 1000,
-              
+                ParticlesCount = 3000,
                 SpeedMin = 1,
                 SpeedMax = 3,
             };
 
-            platform.Y = picDisplay.Height - 40;
             platform.X = picDisplay.Width / 2;
-
+            platform.Y = picDisplay.Height - 40;
 
             emitters.Add(this.emitter);
-
-            point1 = new GravityPoint
-            {
-                x = picDisplay.Width / 2 + 100,
-                y = 80,
-                Power = 10,
-            };
-            point2 = new GravityPoint
-            {
-                x = picDisplay.Width / 2 - 100,
-                y = 80,
-                Power = 10,
-            };
-
-            // привязываем поля к эмиттеру
-            cloudeEmitter.impactPoints.Add(point1);
-            cloudeEmitter.impactPoints.Add(point2);
-
-            emitter.X = picDisplay.Width / 2;
-            emitter.Y = 0;
-            emitter.ParticlePerTick = 2;
 
             while (cloudeEmitter.particles.Count < cloudeEmitter.ParticlesCount)
             {
@@ -99,12 +67,8 @@ namespace particle_system
             }
         }
 
-        int counter = 0;
         private void timer1_Tick(object sender, EventArgs e)
         {
-            //emitter.MousePositionX = MousePositionX;
-            //emitter.MousePositionY = MousePositionY;
-
             spawnCounter++;
             if (spawnCounter >= spawnInterval)
             {
@@ -119,6 +83,7 @@ namespace particle_system
             }
 
             cloudeEmitter.UpdateState();
+
             using (var g = Graphics.FromImage(picDisplay.Image))
             {
                 g.DrawImage(background, 0, 0, picDisplay.Width, picDisplay.Height);
@@ -134,30 +99,29 @@ namespace particle_system
                 }
             }
 
-            if (fallingparticles >= Particle.random.Next(1,3))
+            if (fallingparticles >= spawnNumber)
             {
                 fallingparticles = 0;
                 var rect = new FallingRectangle(Particle.random.Next(picDisplay.Width),
                     0, 0);
 
-                int type = Particle.random.Next(1);
+                int type = Particle.random.Next(3);
 
                 switch (type)
                 {
-                    //case 0:
-                    //    rect.bonus = BonusType.Life;
-                    //    rect.RectColor = Color.Green;
-                    //    break;
-                    //case 1:
-                    //    rect.bonus = BonusType.Size;
-                    //    rect.RectColor = Color.Red;
-                    //    break;
                     case 0:
+                        rect.bonus = BonusType.Life;
+                        rect.RectColor = Color.Green;
+                        break;
+                    case 1:
+                        rect.bonus = BonusType.Size;
+                        rect.RectColor = Color.Red;
+                        break;
+                    case 2:
                         rect.bonus = BonusType.Magnet;
                         rect.RectColor = Color.Pink;
                         break;
                 }
-
                 rects.Add(rect);
             }
 
@@ -226,7 +190,7 @@ namespace particle_system
                             if (!platform.isMagnet)
                             {
                                 platform.isMagnet = true;
-                                platform.magnetTime = 100;
+                                platform.magnetTime = 80;
 
                                 platform.magnetPoint = new GravityPoint
                                 {
@@ -272,38 +236,16 @@ namespace particle_system
                 MessageBox.Show("Game Over");
             }
         }
-
-        private int MousePositionX = 0;
-        private int MousePositionY = 0;
         private void picDisplay_MouseMove(object sender, MouseEventArgs e)
         {
-            //foreach (var emitter in emitters)
-            //{
-            //    emitter.MousePositionX = e.X;
-            //    emitter.MousePositionY = e.Y;
-            //}
-
-            //point2.x = e.X;
-            //point2.y = e.Y;
             platform.X = e.X;
         }
 
-        private void tbDirection_Scroll(object sender, EventArgs e)
+        private void tbSpeed_Scroll(object sender, EventArgs e)
         {
-            emitter.Direction = tbDirection.Value;
-            lbDirection.Text = $"{tbDirection.Value}°";
+            emitter.SpeedMin = tbSpeed.Value;
+            emitter.SpeedMax = tbSpeed.Value + 4;
+            lbDirection.Text = $"Скорость: {tbSpeed.Value}";
         }
-
-       
-
-    //private void tbGravition_Scroll(object sender, EventArgs e)
-    //{
-    //    point1.Power = tbGravition.Value;
-    //}
-
-    //private void tbGravition2_Scroll(object sender, EventArgs e)
-    //{
-    //    point2.Power = tbGravition2.Value;
-    //}
-}
+    }
 }

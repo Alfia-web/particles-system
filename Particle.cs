@@ -23,37 +23,23 @@ namespace particle_system
       
         public Particle()
         {
-            // генерируем произвольное направление и скорость
             var direction = (double)random.Next(360);
             var speed = 1 + random.Next(10);
 
-            // рассчитываем вектор скорости
-            SpeedX = (float)(Math.Cos(direction / 79 * Math.PI) * speed);
-            SpeedY = -(float)(Math.Sin(direction / 45 * Math.PI) * speed);
+            SpeedX = (float)(Math.Cos(direction / 180 * Math.PI) * speed);
+            SpeedY = -(float)(Math.Sin(direction / 180 * Math.PI) * speed);
 
             Radius = 5 + random.Next(10);
         }
 
-            public virtual void Draw(Graphics g)
-            {
-            //float k = Math.Min(1f, Life / 100);
-            // рассчитываем значение альфа канала в шкале от 0 до 255
-            // по аналогии с RGB, он используется для задания прозрачности
-            //int alpha = (int)(k * 255);
-
-            // создаем цвет из уже существующего, но привязываем к нему еще и значение альфа канала
+        public virtual void Draw(Graphics g)
+        {
             var color = Color.Gold;
             var b = new SolidBrush(color);
             g.FillEllipse(b, x - Radius, y - Radius, Radius * 2, Radius * 2);
             b.Dispose();
-
-            //// остальное все так же
-            //g.FillEllipse(b, x - Radius, y - Radius, Radius * 2, Radius * 2);
-
-            //b.Dispose();
+            }
         }
-        }
-
 
         public class ParticleColorful : Particle
         {
@@ -69,16 +55,11 @@ namespace particle_system
                 );
         }
 
-       public override void Draw(Graphics g)
+        public override void Draw(Graphics g)
         {
-            //float k = Math.Min(1f, Life / 100);
-
-            // так как k уменьшается от 1 до 0, то порядок цветов обратный
             var color = FromColor;
             var b = new SolidBrush(color);
-
             g.FillEllipse(b, x - Radius, y - Radius, Radius, Radius * 2);
-
             b.Dispose();
         }
     }

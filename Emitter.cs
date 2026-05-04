@@ -10,20 +10,20 @@ namespace particle_system
 {
     internal class Emitter
     {
-        public int X; // координата X центра эмиттера, будем ее использовать вместо MousePositionX
-        public int Y; // соответствующая координата Y 
-        public int Direction = 0; // вектор направления в градусах куда сыпет эмиттер
-        public int Spreading = 360; // разброс частиц относительно Direction
-        public int SpeedMin = 1; // начальная минимальная скорость движения частицы
-        public int SpeedMax = 10; // начальная максимальная скорость движения частицы
-        public int RadiusMin = 2; // минимальный радиус частицы
-        public int RadiusMax = 10; // максимальный радиус частицы
+        public int X; 
+        public int Y; 
+        public int Direction = 0; 
+        public int Spreading = 360; 
+        public int SpeedMin = 1; 
+        public int SpeedMax = 10; 
+        public int RadiusMin = 2; 
+        public int RadiusMax = 10;
         public int Width = 0;
 
         public int ParticlePerTick = 5; 
 
-        public Color ColorFrom = Color.White; // начальный цвет частицы
-        public Color ColorTo = Color.FromArgb(0, Color.Black); // конечный цвет частиц
+        public Color ColorFrom = Color.White; 
+        public Color ColorTo = Color.FromArgb(0, Color.Black); 
 
         public int ParticlesCount = 100;
 
@@ -34,29 +34,14 @@ namespace particle_system
         public int MousePositionY;
 
         public float GravitationX = 0;
-        public float GravitationY = 0; //гравитация силой 1 пиксель
+        public float GravitationY = 0;
 
-       
         public virtual void UpdateState()
         {
-            int particlesToCreate = ParticlePerTick; //сколько частиц за раз
+            int particlesToCreate = ParticlePerTick;
 
             foreach (var particle in particles)
             { 
-                //если частица умерла
-                //проверяем нужна ли новая
-                //if (particle.Life <= 0)
-                //{
-                //    if(particlesToCreate > 0)
-                //    {
-                //        particlesToCreate -= 1;
-                //        ResetParticle(particle);
-                //    }
-                //}
-                //else
-                //{
-                    //считаем вектор притяжения к точкне
-                    //particle.Life -= 1;
                 foreach (var point in impactPoints)
                 {
                     point.ImpactParticle(particle);
@@ -69,17 +54,8 @@ namespace particle_system
                 {
                     particle.SpeedX *= -1;
                 }
-                //}
-
-                //particle.x += (float)(Math.Cos(particle.Direction * Math.PI /180) * particle.Speed);
-                //particle.y += (float)(Math.Sin(particle.Direction * Math.PI / 180) * particle.Speed);
-
-                //particle.x += (float)(Math.Cos(particle.Direction * Math.PI /180) * particle.Speed);
-                //particle.y += (float)(Math.Sin(particle.Direction * Math.PI / 180) * particle.Speed);
-                
             }
 
-            //while (particles.Count < ParticlesCount && particlesToCreate >= 1)
             while(particlesToCreate >= 1)
             {
                 particlesToCreate -= 1;
@@ -136,7 +112,8 @@ namespace particle_system
                 particle.x = Particle.random.Next(Width);
                 particle.y = 0;
 
-                particle.SpeedY = 6 + Particle.random.Next(0,5);
+                int range = Math.Max(1, SpeedMax - SpeedMin);
+                particle.SpeedY = SpeedMin + Particle.random.Next(range);
                 particle.SpeedX = Particle.random.Next(-2, 2);
             }
         }
@@ -168,7 +145,7 @@ namespace particle_system
             public override void ResetParticle(Particle particle)
             {
                 particle.x = Particle.random.Next(Width);
-                particle.y = Particle.random.Next(50, 150);
+                particle.y = Particle.random.Next(0, 150);
 
                 particle.SpeedX = (float)(Particle.random.NextDouble() - 0.5) * 0.5f;
                 particle.SpeedY = (float)(Particle.random.NextDouble() - 0.5) * 0.5f;
@@ -180,17 +157,44 @@ namespace particle_system
                 {
                     FromColor = Color.White,
                     ToColor = Color.LightBlue,
-                    isBadParticle = false
+                    isBadParticle = false,
+                    Radius = 3 + Particle.random.Next(5)
                 };
             }
 
             public override void UpdateState()
             {
                 base.UpdateState();
+
                 foreach (var particle in particles)
                 {
-                    particle.SpeedX *= 0.85f;
-                    particle.SpeedY *= 0.85f;
+                    particle.SpeedX += (float)(Particle.random.NextDouble() - 0.5) * 0.2f;
+                    particle.SpeedY += (float)(Particle.random.NextDouble() - 0.5) * 0.2f;
+              
+                    float maxSpeed = 1f;
+                    particle.SpeedX = Math.Max(-maxSpeed, Math.Min(maxSpeed, particle.SpeedX));
+                    particle.SpeedY = Math.Max(-maxSpeed, Math.Min(maxSpeed, particle.SpeedY));
+
+                    if (particle.y > 200)
+                    {
+                        particle.y = 200;
+                        particle.SpeedY *= -1;
+                    }
+                    if (particle.y < 0)
+                    {
+                        particle.y = 0;
+                        particle.SpeedY *= -1;
+                    }
+                    if (particle.x < 0)
+                    {
+                        particle.x = 0;
+                        particle.SpeedX *= -1;
+                    }
+                    if (particle.x > Width)
+                    {
+                        particle.x = Width;
+                        particle.SpeedX *= -1;
+                    }
                 }
             }
         }

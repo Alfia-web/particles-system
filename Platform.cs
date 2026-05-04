@@ -22,7 +22,6 @@ namespace particle_system
         public bool isBig = false;
         public int bigTime=0;
         
-
         public void Render(Graphics g)
         {
             g.FillRectangle(Brushes.White, X, Y, Width, Height);
@@ -33,9 +32,7 @@ namespace particle_system
                 ((int)Life).ToString(),
                 new Font("Verdana", 10),
                 Brushes.Black,
-                X + 70,
-                Y
-                );
+                X + 65,Y);
             }
             else
             {
@@ -43,9 +40,7 @@ namespace particle_system
                     ((int)Life).ToString(),
                     new Font("Verdana", 10),
                     Brushes.Black,
-                    X + 40,
-                    Y
-                );
+                    X + 40,Y);
             }
         }
 

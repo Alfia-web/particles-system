@@ -13,12 +13,11 @@ namespace Event_handling.Objects
     {
         Life, Size, Magnet
     }
-
+   
     class FallingRectangle : BaseObject
     {
-        private static Random rnd = new Random();
+        private static Random random = new Random();
 
-        private double timeEnd = 10;
         public int speedRectangle = 6;
         public BonusType bonus;
         public Color RectColor;
@@ -28,6 +27,7 @@ namespace Event_handling.Objects
 
         public FallingRectangle(float x, float y, float angle) : base(x, y, angle)
         {
+            this.Angle = random.Next(10, 170);
         }
         public override void Render(Graphics g)
         {
