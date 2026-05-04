@@ -9,34 +9,38 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Header;
 
 namespace Event_handling.Objects
 {
-    class Rectangle : BaseObject
+    public enum BonusType
+    {
+        Life, Size, Magnet
+    }
+
+    class FallingRectangle : BaseObject
     {
         private static Random rnd = new Random();
+
         private double timeEnd = 10;
+        public int speedRectangle = 3;
+        public BonusType bonus;
+        public Color RectColor;
+        public BonusType BonusType;
 
         public Action<Rectangle> OnTimeOut;
 
-        public Rectangle(float x, float y, float angle) : base(x, y, angle)
+        public FallingRectangle(float x, float y, float angle) : base(x, y, angle)
         {
         }
         public override void Render(Graphics g)
         {
-            timeEnd -= 0.05;
-            if (timeEnd < 0)
-            {
-                timeEnd = 10;
-                OnTimeOut(this);
-            }
+            var state = g.Transform;
+            var matrix = new Matrix();
+            matrix.Translate(X, Y);
+            matrix.Rotate(Angle);
+            g.Transform = matrix;
 
-            g.FillRectangle(new SolidBrush(Color.FloralWhite), 0, 0, 50, 30);
-            g.DrawRectangle(new Pen(Color.Wheat, 2), 0, 0, 50, 30);
+            g.FillRectangle(new SolidBrush(RectColor), -25, -15, 25, 15);
+            g.DrawRectangle(new Pen(RectColor, 2), -25, -15, 25, 15);
 
-            g.DrawString(
-                ((int)timeEnd).ToString(),
-                new Font("Verdana", 8),
-                new SolidBrush(Color.Black),
-                10, 5
-            );
+            g.Transform = state;
         }
 
         public override GraphicsPath GetGraphicsPath()
@@ -44,6 +48,11 @@ namespace Event_handling.Objects
             var path = base.GetGraphicsPath();
             path.AddRectangle(new RectangleF(0, 0, 50, 30));
             return path;
+        }
+
+        public void Update()
+        {
+            Y += speedRectangle;
         }
     }
 }

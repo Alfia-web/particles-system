@@ -1,4 +1,5 @@
-﻿using particle_system.Properties;
+﻿using Event_handling.Objects;
+using particle_system.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,6 +18,8 @@ namespace particle_system
     {
 
         List<Emitter> emitters = new List<Emitter>();
+        List<FallingRectangle> rects = new List<FallingRectangle>();
+
 
         Emitter.TopEmitter emitter;
         Emitter.ClaudeEmitter cloudeEmitter; 
@@ -65,7 +68,6 @@ namespace particle_system
 
 
             emitters.Add(this.emitter);
-
 
             point1 = new GravityPoint
             {
@@ -128,13 +130,42 @@ namespace particle_system
                 
                 cloudeEmitter.Render(g);
                 emitter.Render(g);
-                platform.Render(g); 
+                platform.Render(g);
 
+                foreach (var r in rects)
+                {
+                    r.Update();
+                    r.Render(g);
+                }
+            }
+
+            if (Particle.random.Next(20) == 0)
+            {
+                var rect = new FallingRectangle(Particle.random.Next(picDisplay.Width),
+                    0, 0);
+
+                int type = Particle.random.Next(3);
+
+                switch (type)
+                {
+                    case 0:
+                        rect.bonus = BonusType.Life;
+                        rect.RectColor = Color.Green;
+                        break;
+                    case 1:
+                        rect.bonus = BonusType.Size;
+                        rect.RectColor = Color.Red;
+                        break;
+                    case 2:
+                        rect.bonus = BonusType.Magnet;
+                        rect.RectColor = Color.Pink;
+                        break;
+                }
+
+                rects.Add(rect);
             }
 
             picDisplay.Invalidate();
-
-
 
             foreach (var particle in emitter.particles.ToList())
             {
@@ -158,7 +189,32 @@ namespace particle_system
                 {
                     platform.Life -= 10;
                 }
+            }
 
+            foreach(var rect in rects.ToList())
+            {
+                if(rect.Y > picDisplay.Height)
+                {
+                    rects.Remove(rect);
+                }
+
+                if (platform.IsCollide(rect))
+                {
+                    switch (rect.bonus)
+                    {
+                        case BonusType.Life:
+                            platform.Life += 1;
+                            break;
+                        case BonusType.Size:
+                            platform.Width += 30;
+                            break;
+                        case BonusType.Magnet:
+                            platform.isMagnet = true;
+                            platform.magnetTime = 200;
+                            break;
+                    }
+                    rects.Remove(rect);
+                }
             }
 
             picDisplay.Invalidate();
@@ -168,8 +224,6 @@ namespace particle_system
                 timer1.Stop();
                 MessageBox.Show("Game Over");
             }
-
-           
         }
 
         private int MousePositionX = 0;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Event_handling.Objects;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace particle_system
         public float Width = 100;
         public float Height = 15;
         public int Life = 10;
+        public bool isMagnet = false;
+        public int magnetTime;
 
         public void Render(Graphics g)
         {
@@ -35,6 +38,10 @@ namespace particle_system
                 p.y + p.Radius > Y && p.y - p.Radius < Y + Height;
         }
 
-
+        public bool IsCollide(FallingRectangle rect)
+        {
+            return rect.X > X && rect.X < X + Width &&
+                   rect.Y > Y && rect.Y < Y + Height;
+        }
     }
 }

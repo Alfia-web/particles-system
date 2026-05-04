@@ -20,6 +20,7 @@ namespace particle_system
 
         public static Random random = new Random();
         public bool isBadParticle;
+      
         public Particle()
         {
             // генерируем произвольное направление и скорость
