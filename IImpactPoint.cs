@@ -32,6 +32,11 @@ namespace particle_system
         // а сюда по сути скопировали с минимальными правками то что было в UpdateState
         public override void ImpactParticle(Particle particle)
         {
+            if (particle.isBadParticle)
+            {
+                return;
+            }
+
             float gX = x - particle.x;
             float gY = y - particle.y;
             float r2 = (float)Math.Max(100, gX * gX + gY * gY);

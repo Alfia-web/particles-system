@@ -18,8 +18,10 @@ namespace particle_system
         public int Life = 10;
         public bool isMagnet = false;
         public int magnetTime;
+        public GravityPoint magnetPoint;
         public bool isBig = false;
         public int bigTime=0;
+        
 
         public void Render(Graphics g)
         {

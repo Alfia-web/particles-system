@@ -31,7 +31,7 @@ namespace particle_system
         Image background;
         int points;
         int spawnCounter = 0;
-        int spawnInterval = 75;
+        int spawnInterval = 20;
         int fallingparticles = 0;
 
         public Form1()
@@ -134,25 +134,25 @@ namespace particle_system
                 }
             }
 
-            if (fallingparticles >= Particle.random.Next(3,10))
+            if (fallingparticles >= Particle.random.Next(1,3))
             {
                 fallingparticles = 0;
                 var rect = new FallingRectangle(Particle.random.Next(picDisplay.Width),
                     0, 0);
 
-                int type = Particle.random.Next(3);
+                int type = Particle.random.Next(1);
 
                 switch (type)
                 {
+                    //case 0:
+                    //    rect.bonus = BonusType.Life;
+                    //    rect.RectColor = Color.Green;
+                    //    break;
+                    //case 1:
+                    //    rect.bonus = BonusType.Size;
+                    //    rect.RectColor = Color.Red;
+                    //    break;
                     case 0:
-                        rect.bonus = BonusType.Life;
-                        rect.RectColor = Color.Green;
-                        break;
-                    case 1:
-                        rect.bonus = BonusType.Size;
-                        rect.RectColor = Color.Red;
-                        break;
-                    case 2:
                         rect.bonus = BonusType.Magnet;
                         rect.RectColor = Color.Pink;
                         break;
@@ -188,7 +188,15 @@ namespace particle_system
                 if (outOfSpace && !particle.isBadParticle)
                 {
                     fallingparticles++;
-                    platform.Life -= 10;
+                    if (!platform.isMagnet && !particle.isBadParticle)
+                    {
+                        platform.Life -= 10;
+                    }
+                    emitter.particles.Remove(particle);
+                }
+                if (platform.isMagnet && !particle.isBadParticle)
+                {
+                    points++;
                 }
             }
 
@@ -215,8 +223,20 @@ namespace particle_system
                             }
                             break;
                         case BonusType.Magnet:
-                            platform.isMagnet = true;
-                            platform.magnetTime = 200;
+                            if (!platform.isMagnet)
+                            {
+                                platform.isMagnet = true;
+                                platform.magnetTime = 100;
+
+                                platform.magnetPoint = new GravityPoint
+                                {
+                                    x = platform.X + platform.Width / 2,
+                                    y = platform.Y,
+                                    Power = 8000
+                                };
+
+                                emitter.impactPoints.Add(platform.magnetPoint);
+                            }
                             break;
                     }
                     rects.Remove(rect);
@@ -230,6 +250,19 @@ namespace particle_system
                 {
                     platform.isBig = false;
                     platform.Width -= 30;
+                }
+            }
+
+            if (platform.isMagnet)
+            {
+                platform.magnetTime--;
+                platform.magnetPoint.x = platform.X + platform.Width / 2;
+                platform.magnetPoint.y = platform.Y + platform.Height / 2;
+                if(platform.magnetTime <= 0)
+                {
+                    platform.isMagnet = false;
+                    emitter.impactPoints.Remove(platform.magnetPoint);
+                    platform.magnetPoint = null;
                 }
             }
 
