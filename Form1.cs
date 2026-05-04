@@ -52,7 +52,7 @@ namespace particle_system
                 SpeedMax = 6,
                 ParticlePerTick = 1,
                 RadiusMin = 5,
-                RadiusMax = 15,
+                RadiusMax = 10,
             };
 
             cloudeEmitter = new ClaudeEmitter
@@ -207,7 +207,12 @@ namespace particle_system
                             platform.Life += 1;
                             break;
                         case BonusType.Size:
-                            platform.Width += 30;
+                            if (!platform.isBig)
+                            {
+                                platform.isBig = true;
+                                platform.Width += 30;
+                                platform.bigTime = 250;
+                            }
                             break;
                         case BonusType.Magnet:
                             platform.isMagnet = true;
@@ -215,6 +220,16 @@ namespace particle_system
                             break;
                     }
                     rects.Remove(rect);
+                }
+            }
+
+            if (platform.isBig)
+            {
+                platform.bigTime--;
+                if(platform.bigTime <= 0)
+                {
+                    platform.isBig = false;
+                    platform.Width -= 30;
                 }
             }
 

@@ -18,18 +18,33 @@ namespace particle_system
         public int Life = 10;
         public bool isMagnet = false;
         public int magnetTime;
+        public bool isBig = false;
+        public int bigTime=0;
 
         public void Render(Graphics g)
         {
             g.FillRectangle(Brushes.White, X, Y, Width, Height);
 
-            g.DrawString(
+            if (isBig)
+            {
+                g.DrawString(
                 ((int)Life).ToString(),
                 new Font("Verdana", 10),
                 Brushes.Black,
-                X + 40,
-                Y 
-            );
+                X + 70,
+                Y
+                );
+            }
+            else
+            {
+                g.DrawString(
+                    ((int)Life).ToString(),
+                    new Font("Verdana", 10),
+                    Brushes.Black,
+                    X + 40,
+                    Y
+                );
+            }
         }
 
         public bool IsCollide(Particle p)
