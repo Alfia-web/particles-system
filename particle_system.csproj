@@ -89,6 +89,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\space.jpg" />
+    <Content Include="Resources\ba5abf42395eeaa626b79cd9803fa90.jpg" />
+    <None Include="Resources\c83f9f4196cdd42665099216ff85408e.jpg" />
     <None Include="Resources\b137314d29b249a7d78a2c1243c4063c.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

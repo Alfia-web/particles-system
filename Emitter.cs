@@ -5,43 +5,41 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static particle_system.Emitter;
 
 namespace particle_system
 {
     internal class Emitter
     {
-        public int X; 
-        public int Y; 
-        public int Direction = 0; 
-        public int Spreading = 360; 
-        public int SpeedMin = 1; 
-        public int SpeedMax = 10; 
-        public int RadiusMin = 2; 
+        public int X;
+        public int Y;
+        public int Direction = 0;
+        public int Spreading = 360;
+        public int SpeedMin = 1;
+        public int SpeedMax = 10;
+        public int RadiusMin = 2;
         public int RadiusMax = 10;
         public int Width = 0;
 
-        public int ParticlePerTick = 5; 
+        public int ParticlePerTick = 5;
 
-        public Color ColorFrom = Color.White; 
-        public Color ColorTo = Color.FromArgb(0, Color.Black); 
+        public Color ColorFrom = Color.White;
+        public Color ColorTo = Color.FromArgb(0, Color.Black);
 
         public int ParticlesCount = 100;
 
         public List<Particle> particles = new List<Particle>();
-        public List<IImpactPoint> impactPoints = new List<IImpactPoint>(); //точки притяженния
+        public List<IImpactPoint> impactPoints = new List<IImpactPoint>();
 
         public int MousePositionX;
         public int MousePositionY;
-
-        public float GravitationX = 0;
-        public float GravitationY = 0;
 
         public virtual void UpdateState()
         {
             int particlesToCreate = ParticlePerTick;
 
             foreach (var particle in particles)
-            { 
+            {
                 foreach (var point in impactPoints)
                 {
                     point.ImpactParticle(particle);
@@ -50,16 +48,17 @@ namespace particle_system
                 particle.x += particle.SpeedX;
                 particle.y += particle.SpeedY;
 
-                if(particle.x < 0 || particle.x > Width)
+                if (particle.x < 0 || particle.x > Width)
                 {
                     particle.SpeedX *= -1;
                 }
+
             }
 
-            while(particlesToCreate >= 1)
+            while (particlesToCreate >= 1)
             {
                 particlesToCreate -= 1;
-                if(particles.Count >= ParticlesCount)
+                if (particles.Count >= ParticlesCount)
                 {
                     break;
                 }
@@ -71,9 +70,6 @@ namespace particle_system
 
         public virtual void ResetParticle(Particle particle)
         {
-            particle.x = X;
-            particle.y = Y;
-
             var direction = Direction
                 + (double)Particle.random.Next(Spreading)
                 - Spreading / 2;
@@ -88,38 +84,20 @@ namespace particle_system
 
         public void Render(Graphics g)
         {
-            foreach(var particle in particles)
+            foreach (var particle in particles)
             {
                 particle.Draw(g);
             }
 
-            foreach(var point in impactPoints)
+            foreach (var point in impactPoints)
             {
-               point.Render(g); 
+                point.Render(g);
             }
         }
-
-        public class TopEmitter : Emitter
-        {
-            public int Width; 
-
-            public override void ResetParticle(Particle particle)
-            {
-                base.ResetParticle(particle);
-
-                particle.x = Particle.random.Next(Width);
-                particle.y = 0;
-
-                int range = Math.Max(1, SpeedMax - SpeedMin);
-                particle.SpeedY = SpeedMin + Particle.random.Next(range);
-                particle.SpeedX = Particle.random.Next(-2, 2);
-            }
-        }
-
         public virtual Particle CreatParticle()
         {
             var particle = new ParticleColorful();
-
+            particle.Life = 20;
             if (Particle.random.Next(10) < 4)
             {
                 particle.FromColor = Color.Red;
@@ -132,7 +110,21 @@ namespace particle_system
                 particle.ToColor = Color.Gold;
                 particle.isBadParticle = false;
             }
-            return particle; 
+            return particle;
+        }
+
+        public class TopEmitter : Emitter
+        {
+            public int Width;
+
+            public override void ResetParticle(Particle particle)
+            {
+                particle.x = Particle.random.Next(Width);
+                particle.y = 0;
+
+                particle.SpeedY = SpeedMin + Particle.random.Next(SpeedMax - SpeedMin);
+                particle.SpeedX = Particle.random.Next(-2, 2);
+            }
         }
 
         public class ClaudeEmitter : Emitter
@@ -141,11 +133,12 @@ namespace particle_system
 
             public override void ResetParticle(Particle particle)
             {
+                particle.Life = 20;
                 particle.x = Particle.random.Next(Width);
                 particle.y = Particle.random.Next(0, 150);
 
-                particle.SpeedX = (float)(Particle.random.NextDouble() - 0.5) * 0.5f;
-                particle.SpeedY = (float)(Particle.random.NextDouble() - 0.5) * 0.5f;
+                particle.SpeedX = (float)(Particle.random.NextDouble() - 0.5);
+                particle.SpeedY = (float)(Particle.random.NextDouble() - 0.5);
             }
 
             public override Particle CreatParticle()
@@ -161,16 +154,14 @@ namespace particle_system
 
             public override void UpdateState()
             {
-                base.UpdateState();
+                int particlesToCreate = ParticlePerTick;
 
                 foreach (var particle in particles)
                 {
-                    particle.SpeedX += (float)(Particle.random.NextDouble() - 0.5) * 0.2f;
-                    particle.SpeedY += (float)(Particle.random.NextDouble() - 0.5) * 0.2f;
-              
-                    float maxSpeed = 1f;
-                    particle.SpeedX = Math.Max(-maxSpeed, Math.Min(maxSpeed, particle.SpeedX));
-                    particle.SpeedY = Math.Max(-maxSpeed, Math.Min(maxSpeed, particle.SpeedY));
+                    particle.x += particle.SpeedX;
+                    particle.y += particle.SpeedY;
+
+                    particle.Life -= 0.1f;
 
                     if (particle.y > 200)
                     {
@@ -193,34 +184,47 @@ namespace particle_system
                         particle.SpeedX *= -1;
                     }
                 }
-            }
-        }
-        public class TrainEmitter : Emitter
-        {
-            public override void ResetParticle(Particle particle)
-            {
-                base.ResetParticle(particle);
 
-                //точки появления - платформа
-                particle.x = X;
-                particle.y = Y;
+                particles.RemoveAll( p => p.Life <= 0);
 
-                particle.SpeedX = (float)(Particle.random.NextDouble() - 0.5) * 1.5f;
-                particle.SpeedY = (float)(Particle.random.NextDouble() - 0.5) * 1.5f;
-
-                particle.Life = 10 + Particle.random.Next(20);
-            }
-
-            public override Particle CreatParticle()
-            {
-                return new ParticleColorful()
+                while (particlesToCreate-- > 0)
                 {
-                    FromColor = Color.Coral,
-                    ToColor = Color.FromArgb(0, Color.Transparent),
-                    isBadParticle = false,
-                    Radius = 3
-                };
+                    if (particles.Count >= ParticlesCount)
+                        break;
+
+                    var p = CreatParticle();
+                    ResetParticle(p);
+                    particles.Add(p);
+                }
             }
+
+
+            //public class TrainEmitter : Emitter
+            //{
+            //    public override void ResetParticle(Particle particle)
+            //    {
+            //        base.ResetParticle(particle);
+
+            //        particle.x = X;
+            //        particle.y = Y;
+
+            //        particle.SpeedX = (float)(Particle.random.NextDouble() - 0.5);
+            //        particle.SpeedY = (float)(Particle.random.NextDouble() - 0.5);
+
+            //        particle.Life = 20 + Particle.random.Next(20);
+            //    }
+
+            //    public override Particle CreatParticle()
+            //    {
+            //        return new ParticleColorful()
+            //        {
+            //            FromColor = Color.Coral,
+            //            ToColor = Color.FromArgb(0, Color.Transparent),
+            //            isBadParticle = false,
+            //            Radius = 3
+            //        };
+            //    }
+            //}
         }
     }
 }

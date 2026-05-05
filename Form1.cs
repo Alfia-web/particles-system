@@ -21,7 +21,7 @@ namespace particle_system
 
         Emitter.TopEmitter emitter;
         Emitter.ClaudeEmitter cloudeEmitter; 
-        Emitter.TrainEmitter trainEmitter;
+        //Emitter.TrainEmitter trainEmitter;
 
         Platform platform = new Platform();
 
@@ -30,7 +30,6 @@ namespace particle_system
         int spawnCounter = 0;
         int spawnInterval = 20;
         int fallingparticles = 0;
-        int spawnNumber = Particle.random.Next(4,10);
 
         public Form1()
         {
@@ -55,31 +54,24 @@ namespace particle_system
                 SpeedMax = 3,
             };
 
-            trainEmitter = new TrainEmitter
-            {
-                Width = picDisplay.Width,
-                ParticlePerTick = 2,
-                SpeedMax = 2,
-                SpeedMin=1
-            };
+            //trainEmitter = new TrainEmitter
+            //{
+            //    Width = picDisplay.Width,
+            //    ParticlePerTick = 2,
+            //    SpeedMax = 2,
+            //    SpeedMin=1
+            //};
 
             platform.X = picDisplay.Width / 2;
             platform.Y = picDisplay.Height - 40;
 
             emitters.Add(this.emitter);
-
-            while (cloudeEmitter.particles.Count < cloudeEmitter.ParticlesCount)
-            {
-                var p = cloudeEmitter.CreatParticle();
-                cloudeEmitter.ResetParticle(p);
-                cloudeEmitter.particles.Add(p);
-            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            trainEmitter.X = (int)(platform.X + platform.Width / 2);
-            trainEmitter.Y = (int)(platform.Y);
+            //trainEmitter.X = (int)(platform.X + platform.Width / 2);
+            //trainEmitter.Y = (int)(platform.Y);
 
             spawnCounter++;
             if (spawnCounter >= spawnInterval)
@@ -95,7 +87,7 @@ namespace particle_system
             }
 
             cloudeEmitter.UpdateState();
-            trainEmitter.UpdateState();
+            //trainEmitter.UpdateState();
 
             using (var g = Graphics.FromImage(picDisplay.Image))
             {
@@ -104,7 +96,7 @@ namespace particle_system
                 
                 cloudeEmitter.Render(g);
                 emitter.Render(g);
-                trainEmitter.Render(g);
+                //trainEmitter.Render(g);
                 platform.Render(g);
 
                 foreach (var r in rects)
@@ -119,7 +111,7 @@ namespace particle_system
                 }
             }
 
-            if (fallingparticles >= spawnNumber)
+            if (fallingparticles >= Particle.random.Next(3, 7))
             {
                 fallingparticles = 0;
                 var rect = new FallingRectangle(Particle.random.Next(picDisplay.Width),
@@ -175,6 +167,7 @@ namespace particle_system
                     if (platform.isMagnet)
                     {
                         points++;
+                        txbScore.Text = points.ToString();
                     }
                     if (!platform.isMagnet && !particle.isBadParticle)
                     {

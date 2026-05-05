@@ -93,6 +93,7 @@
             this.txbScore.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.txbScore.Location = new System.Drawing.Point(670, 37);
             this.txbScore.Name = "txbScore";
+            this.txbScore.ReadOnly = true;
             this.txbScore.Size = new System.Drawing.Size(130, 22);
             this.txbScore.TabIndex = 8;
             // 

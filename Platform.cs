@@ -32,7 +32,7 @@ namespace particle_system
                 ((int)Life).ToString(),
                 new Font("Verdana", 10),
                 Brushes.Black,
-                X + 65,Y);
+                X + 60,Y);
             }
             else
             {
