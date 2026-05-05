@@ -208,7 +208,7 @@ namespace particle_system
                 particle.SpeedX = (float)(Particle.random.NextDouble() - 0.5) * 1.5f;
                 particle.SpeedY = (float)(Particle.random.NextDouble() - 0.5) * 1.5f;
 
-                particle.Life = 20 + Particle.random.Next(20);
+                particle.Life = 10 + Particle.random.Next(20);
             }
 
             public override Particle CreatParticle()

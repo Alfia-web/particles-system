@@ -99,6 +99,7 @@ namespace particle_system
 
             using (var g = Graphics.FromImage(picDisplay.Image))
             {
+                g.Clear(Color.White);
                 g.DrawImage(background, 0, 0, picDisplay.Width, picDisplay.Height);
                 
                 cloudeEmitter.Render(g);
@@ -257,7 +258,12 @@ namespace particle_system
         }
         private void picDisplay_MouseMove(object sender, MouseEventArgs e)
         {
-            platform.X = e.X;
+            float moveTo = e.X;
+
+            if (moveTo > picDisplay.Width - platform.Width)
+                moveTo = picDisplay.Width - platform.Width;
+
+            platform.X = moveTo;
 
             if (platform.isMagnet)
             {
@@ -271,6 +277,11 @@ namespace particle_system
             emitter.SpeedMin = tbSpeed.Value;
             emitter.SpeedMax = tbSpeed.Value + 4;
             lbDirection.Text = $"Скорость: {tbSpeed.Value}";
+        }
+
+        private void picDisplay_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
