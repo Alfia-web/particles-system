@@ -71,7 +71,6 @@ namespace particle_system
 
         public virtual void ResetParticle(Particle particle)
         {
-            //particle.Life = Particle.random.Next(LifeMin, LifeMax);
             particle.x = X;
             particle.y = Y;
 
@@ -100,10 +99,9 @@ namespace particle_system
             }
         }
 
-        //падающие сверху частицы
         public class TopEmitter : Emitter
         {
-            public int Width; //длина экрана
+            public int Width; 
 
             public override void ResetParticle(Particle particle)
             {
@@ -118,7 +116,6 @@ namespace particle_system
             }
         }
 
-        //метод генерации частиц (если надо переопределить)
         public virtual Particle CreatParticle()
         {
             var particle = new ParticleColorful();
@@ -196,6 +193,33 @@ namespace particle_system
                         particle.SpeedX *= -1;
                     }
                 }
+            }
+        }
+        public class TrainEmitter : Emitter
+        {
+            public override void ResetParticle(Particle particle)
+            {
+                base.ResetParticle(particle);
+
+                //точки появления - платформа
+                particle.x = X;
+                particle.y = Y;
+
+                particle.SpeedX = (float)(Particle.random.NextDouble() - 0.5) * 1.5f;
+                particle.SpeedY = (float)(Particle.random.NextDouble() - 0.5) * 1.5f;
+
+                particle.Life = 20 + Particle.random.Next(20);
+            }
+
+            public override Particle CreatParticle()
+            {
+                return new ParticleColorful()
+                {
+                    FromColor = Color.Coral,
+                    ToColor = Color.FromArgb(0, Color.Transparent),
+                    isBadParticle = false,
+                    Radius = 3
+                };
             }
         }
     }

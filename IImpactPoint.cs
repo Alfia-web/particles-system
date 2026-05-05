@@ -34,9 +34,9 @@ namespace particle_system
 
             float gX = x - particle.x;
             float gY = y - particle.y;
-            float r2 = (float)(gX * gX + gY * gY);
+            float r2 = (float)Math.Max(100, gX * gX + gY * gY);
 
-            float force = Power / (r2 + 500); 
+            float force = Power / r2; 
 
             particle.SpeedX += gX * force;
             particle.SpeedY += gY * force;
@@ -45,7 +45,7 @@ namespace particle_system
         public override void Render(Graphics g)
         {
             g.DrawEllipse(
-              new Pen(Color.Red),
+              new Pen(Color.Red, 5),
               x - Power / 2,
               y - Power / 2,
               Power,
@@ -55,16 +55,15 @@ namespace particle_system
 
     public class AntiGravityPoint : IImpactPoint
     {
-        public int Power = 100; // сила притяжения
+        public int Power = 100; 
 
-        // а сюда по сути скопировали с минимальными правками то что было в UpdateState
         public override void ImpactParticle(Particle particle)
         {
             float gX = x - particle.x;
             float gY = y - particle.y;
             float r2 = (float)Math.Max(100, gX * gX + gY * gY);
 
-            float force = Power / (r2 + 2000);
+            float force = Power / r2;
 
             particle.SpeedX -= gX * force;
             particle.SpeedY -= gY * force;
