@@ -36,7 +36,7 @@ namespace particle_system
             InitializeComponent();
 
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
-            background = Properties.Resources.b137314d29b249a7d78a2c1243c4063c;
+            background = Properties.Resources.c83f9f4196cdd42665099216ff85408e;
 
             emitter = new TopEmitter
             {
@@ -153,7 +153,7 @@ namespace particle_system
                     else
                     {
                         points++;
-                        if (points % 5 ==0 && spawnCounter > 10)
+                        if (points % 5 == 0)
                         {
                             spawnInterval -= 5;
                         }

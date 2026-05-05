@@ -100,14 +100,14 @@ namespace particle_system
             particle.Life = 20;
             if (Particle.random.Next(10) < 4)
             {
-                particle.FromColor = Color.Red;
-                particle.ToColor = Color.Red;
+                particle.FromColor = Color.Black;
+                particle.ToColor = Color.Black;
                 particle.isBadParticle = true;
             }
             else
             {
-                particle.FromColor = Color.Gold;
-                particle.ToColor = Color.Gold;
+                particle.FromColor = Color.Cyan;
+                particle.ToColor = Color.Cyan;
                 particle.isBadParticle = false;
             }
             return particle;

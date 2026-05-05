@@ -41,7 +41,7 @@
             // 
             // picDisplay
             // 
-            this.picDisplay.BackgroundImage = global::particle_system.Properties.Resources.b137314d29b249a7d78a2c1243c4063c;
+            this.picDisplay.BackgroundImage = global::particle_system.Properties.Resources.c83f9f4196cdd42665099216ff85408e;
             this.picDisplay.Location = new System.Drawing.Point(3, 2);
             this.picDisplay.Name = "picDisplay";
             this.picDisplay.Size = new System.Drawing.Size(661, 746);

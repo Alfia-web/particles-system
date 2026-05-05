@@ -10,9 +10,8 @@
 
 namespace particle_system.Properties {
     using System;
-    using System.Drawing;
-
-
+    
+    
     /// <summary>
     ///   Класс ресурса со строгой типизацией для поиска локализованных строк и т.д.
     /// </summary>
@@ -24,7 +23,7 @@ namespace particle_system.Properties {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
-        internal static Image c83f9f4196cdd42665099216ff85408e;
+        
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
@@ -64,9 +63,29 @@ namespace particle_system.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _5ba5abf42395eeaa626b79cd9803fa90 {
+            get {
+                object obj = ResourceManager.GetObject("5ba5abf42395eeaa626b79cd9803fa90", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap b137314d29b249a7d78a2c1243c4063c {
             get {
                 object obj = ResourceManager.GetObject("b137314d29b249a7d78a2c1243c4063c", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap c83f9f4196cdd42665099216ff85408e {
+            get {
+                object obj = ResourceManager.GetObject("c83f9f4196cdd42665099216ff85408e", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
